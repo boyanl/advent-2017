@@ -1,2 +1,4 @@
 day_*
 !day_*.nim
+.idea
+lsp
