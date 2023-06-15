@@ -1,8 +1,16 @@
 import strutils
 import sequtils
 
-type Pos = object
-  r, c: int
+type Pos = (int, int)
+
+func r(p: Pos): int =
+  return p[0]
+  
+func c(p: Pos): int =
+  return p[1]
+  
+func `+`(p: Pos, d: (int, int)): Pos =
+  return (p[0] + d[0], p[1] + d[1])
   
 type Direction = enum
   Left, Right, Up, Down
@@ -21,12 +29,11 @@ let tracks = stdin.lines.toSeq
 
 proc find_starting_pos(): Pos =
   let x = tracks[0].find('|')
-  return Pos(r: 0, c: x)
+  return (0, x)
   
 func next_along_dir(p: Pos, d: Direction): Pos =
   let i = DIRS.find(d)
-  let (dr, dc) = [(1, 0), (0, 1), (-1, 0), (0, -1)][i]
-  return Pos(r: p.r + dr, c: p.c + dc)
+  return p + [(1, 0), (0, 1), (-1, 0), (0, -1)][i]
   
 
 proc follow(start: Pos): (string, int) =
